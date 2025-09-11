@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BookCatalogApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/brown</item>
+         <item name="colorPrimaryVariant">@color/sandy</item>
+         <item name="android:statusBarColor">@color/great</item>
+    </style>
+
+    <style name="Theme.BookCatalogApp" parent="Base.Theme.BookCatalogApp" />
+</resources>
