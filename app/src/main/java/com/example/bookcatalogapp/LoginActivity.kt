@@ -1,6 +1,7 @@
 package com.example.bookcatalogapp
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -37,6 +38,11 @@ class LoginActivity : AppCompatActivity() {
     private fun loginDatabase(username: String, password: String) {
         val userExist = databaseHelper.readUser(username, password)
         if (userExist) {
+            val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPref.edit()
+            editor.putString("logged_username", username)
+            editor.apply()
+
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
