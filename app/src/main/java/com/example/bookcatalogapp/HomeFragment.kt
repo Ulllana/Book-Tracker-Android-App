@@ -38,9 +38,11 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        val adapter = BooksAdapter { book ->
-            addBookToDb(book)
-        }
+        val adapter = BooksAdapter(
+            onAddClick = { book ->
+                addBookToDb(book)
+            }
+        )
         binding.resultsRecyclerView.adapter = adapter
         binding.resultsRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -62,11 +64,11 @@ class HomeFragment : Fragment() {
         val sharedPref = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val username = sharedPref.getString("logged_username", "") ?: ""
         if (username.isNotEmpty()) {
-            val rowId = databaseHelper.insertBook(book, username)
+            val rowId = databaseHelper.insertBookToList(book, "Favorites", username) // Add to Favorites by default
             if (rowId > 0) {
                 Toast.makeText(requireContext(), "Book added successfully", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Failed to add book", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Book already added or failed", Toast.LENGTH_SHORT).show() // Updated message
             }
         } else {
             Toast.makeText(requireContext(), "No user logged in", Toast.LENGTH_SHORT).show()
